@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.blog.mapper.article.ArticleBaseinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.blog.mapper.article.ArticleBaseinfo" >
+    <id column="article_baseinfo_id" property="articleBaseinfoId" jdbcType="INTEGER" />
+    <result column="article_title" property="articleTitle" jdbcType="VARCHAR" />
+    <result column="article_summary" property="articleSummary" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="is_top" property="isTop" jdbcType="TINYINT" />
+    <result column="traffic" property="traffic" jdbcType="INTEGER" />
+    <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
+    <result column="updated_date" property="updatedDate" jdbcType="TIMESTAMP" />
+    <result column="is_valid" property="isValid" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    article_baseinfo_id, article_title, article_summary, user_id, is_top, traffic, created_date, 
+    updated_date, is_valid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from article_baseinfo
+    where article_baseinfo_id = #{articleBaseinfoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from article_baseinfo
+    where article_baseinfo_id = #{articleBaseinfoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.blog.mapper.article.ArticleBaseinfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="articleBaseinfoId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into article_baseinfo (article_title, article_summary, user_id, 
+      is_top, traffic, created_date, 
+      updated_date, is_valid)
+    values (#{articleTitle,jdbcType=VARCHAR}, #{articleSummary,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{isTop,jdbcType=TINYINT}, #{traffic,jdbcType=INTEGER}, #{createdDate,jdbcType=TIMESTAMP}, 
+      #{updatedDate,jdbcType=TIMESTAMP}, #{isValid,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.blog.mapper.article.ArticleBaseinfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="articleBaseinfoId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into article_baseinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleTitle != null" >
+        article_title,
+      </if>
+      <if test="articleSummary != null" >
+        article_summary,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="isTop != null" >
+        is_top,
+      </if>
+      <if test="traffic != null" >
+        traffic,
+      </if>
+      <if test="createdDate != null" >
+        created_date,
+      </if>
+      <if test="updatedDate != null" >
+        updated_date,
+      </if>
+      <if test="isValid != null" >
+        is_valid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="articleTitle != null" >
+        #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articleSummary != null" >
+        #{articleSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="isTop != null" >
+        #{isTop,jdbcType=TINYINT},
+      </if>
+      <if test="traffic != null" >
+        #{traffic,jdbcType=INTEGER},
+      </if>
+      <if test="createdDate != null" >
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null" >
+        #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isValid != null" >
+        #{isValid,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.blog.mapper.article.ArticleBaseinfo" >
+    update article_baseinfo
+    <set >
+      <if test="articleTitle != null" >
+        article_title = #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articleSummary != null" >
+        article_summary = #{articleSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="isTop != null" >
+        is_top = #{isTop,jdbcType=TINYINT},
+      </if>
+      <if test="traffic != null" >
+        traffic = #{traffic,jdbcType=INTEGER},
+      </if>
+      <if test="createdDate != null" >
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null" >
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isValid != null" >
+        is_valid = #{isValid,jdbcType=TINYINT},
+      </if>
+    </set>
+    where article_baseinfo_id = #{articleBaseinfoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.blog.mapper.article.ArticleBaseinfo" >
+    update article_baseinfo
+    set article_title = #{articleTitle,jdbcType=VARCHAR},
+      article_summary = #{articleSummary,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      is_top = #{isTop,jdbcType=TINYINT},
+      traffic = #{traffic,jdbcType=INTEGER},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      is_valid = #{isValid,jdbcType=TINYINT}
+    where article_baseinfo_id = #{articleBaseinfoId,jdbcType=INTEGER}
+  </update>
+
+  <select id="getArticleList" parameterType="map" resultType="hashmap">
+    SELECT
+      article_baseinfo_id articleBaseinfoId,article_title articleTitle
+    FROM article_baseinfo
+    WHERE is_valid = 1 AND article_title LIKE "%"#{searchKey}"%"
+    ORDER BY is_top DESC
+  </select>
+</mapper>
